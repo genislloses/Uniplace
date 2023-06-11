@@ -1,0 +1,36 @@
+<SearchWindow>:
+    name: 'search'
+    MDBoxLayout:
+        orientation: 'vertical'
+        spacing: 15
+        MDTopAppBar:
+            title: 'uniplace'
+            md_bg_color: '#EEEEEE'
+            specific_text_color: '#C8102E'
+            anchor_title: "center"
+            pos_hint: {"center": 1}
+            left_action_items: [['arrow-left', lambda x: app.change_window('home')]]
+            right_action_items: [['']]
+            elevation: 0
+        MDBoxLayout:
+            orientation: 'vertical'
+            MDTextField:
+                id: search_field
+                hint_text: 'Enginyeria Informàtica'
+                mode: 'round'
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                size_hint_x: .95
+                icon_left: 'magnify'
+                icon_left_color_focus: '#C8102E'
+                text_color_focus: 'grey'
+                line_color_focus: 'grey'
+                fill_color_normal: '#EEEEEE'
+
+            MDBoxLayout:
+                #adaptive_height: True
+                padding: 10, 30
+                MDScrollView:
+                    MDList:
+                        id: search_area
+                        padding: 30, 10
+                        spacing: 45

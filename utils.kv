@@ -1,0 +1,576 @@
+<InfoBox@AnchorLayout>:
+    canvas.before:
+        Color:
+            id: infobox
+            rgba: 200/255, 16/255, 46/255, 1
+        Line:
+            width: 1.5
+            rounded_rectangle: self.x, self.y, self.width, self.height, 10
+
+<Separator@Widget>:
+    canvas:
+        Color:
+            rgba: 200/255, 16/255, 46/255, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+<HSeparator@Separator>:
+    size_hint: (1, None)
+    height: dp(1.5)
+
+<OpenDropButton>:
+    cols: 2
+    background_normal: ''
+    background_color: app.theme_cls.bg_normal
+    color: (0, 0, 0, 1)
+    font_size: 20
+    halign: 'left'
+    valign: 'center'
+    size_hint_y: None
+    height: 40
+    Label:
+        text: self.text
+    Image:
+        id: arrow
+        source: 'assets/arrow.png'
+        size_hint_x:.1
+        rot_angle: 90
+        canvas.before:
+            PushMatrix
+            Rotate:
+                angle: self.rot_angle
+                origin: self.center
+        canvas.after:
+            PopMatrix
+
+
+<DropdownButton>:
+    background_normal: ''
+    background_color: app.theme_cls.bg_normal
+    color: (0, 0, 0, 1)
+    halign: 'left'
+    valign: 'center'
+
+
+
+<IconTextFieldRound@MDBoxLayout>:
+    size_hint: 0.9, None
+    pos_hint: {'center_x':0.5}
+    padding: 20,0
+    #md_bg_color: 0.93, .93, .93,.6
+    canvas.before:
+        Color:
+            rgba: 0.93, .93, .93,.8
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [30,]
+    #height: text_field.height
+    hint_text: ''
+    field_text: ''
+    left_icon: ''
+    right_icon: ''
+    #adaptive_height: True
+    height: field.height - dp(20)
+    MDTextField:
+        id: field
+        hint_text: root.hint_text
+        text: root.field_text
+        icon_left: root.left_icon
+        theme_text_color: 'Custom'
+        text_color: '#C8102E'
+        hint_text_color_focus: '#C8102E'
+        icon_left_color_focus: '#C8102E'
+        text_color_focus: 'grey'
+        line_color_focus: 0.93, .93, .93,.8
+        line_color_normal: 0.93, .93, .93,.8
+        size_hint_y: None
+        pos_hint: {'center_y': 0.5}
+        #fill_color_normal: '#EEEEEE'
+        on_text_validate: app.root.get_screen('search').on_t()
+
+#    MDIcon:
+#        icon: root.right_icon
+#        pos_hint: {"center_y": .5}
+#        pos: field.width - self.width + dp(8), 0
+#        theme_text_color: 'Custom'
+#        text_color: '#C8102E'
+
+
+<SearchItemCard>:
+    pos_hint: {'center_x': 0.5}
+    size_hint_y: None
+    height: logo.height +dp(20)
+    radius: [3,]
+    elevation: 4
+    icon_left: ''
+    uni_name: ''
+    sub_title: ''
+    pages: ''
+    loc: ''
+    padding: 20,20
+    on_release: app.root.current = 'degree'
+    Image:
+        id: logo
+        source: root.icon_left
+        size_hint: None, None
+        size: '100dp', '100dp'
+        allow_stretch: True
+        keep_ratio: True
+
+    MDBoxLayout:
+        adaptive_height: True
+        orientation: 'vertical'
+        padding: 10
+        spacing: 2
+        TwoLineListItem:
+            text: root.uni_name
+            secondary_text: root.sub_title
+            ripple_scale: 0
+
+        MDBoxLayout:
+            adaptive_height: True
+            MDBoxLayout:
+                adaptive_height: True
+                spacing: 10
+                padding: 30, 0 ,0,0
+                MDIcon:
+                    icon: 'file-document-outline'
+                    size_hint: None, None
+                    size: '28dp', '28dp'
+                    color: '#C8102E'
+                    allow_stretch: True
+                    keep_ratio: True
+                MDLabel:
+                    text: root.pages
+                    font_size: '14dp'
+                    bold: True
+
+            MDBoxLayout:
+                adaptive_height: True
+                spacing: 10
+                MDIcon:
+                    icon: 'map-marker'
+                    size_hint: None, None
+                    size: '28dp', '28dp'
+                    color: '#C8102E'
+                    allow_stretch: True
+                    keep_ratio: True
+                MDLabel:
+                    text: root.loc
+                    font_size: '14dp'
+                    bold: True
+
+#:import Window kivy.core.window.Window
+<ContentBox>:
+    id: box
+    adaptive_height: True
+    cols: 1
+    Label:
+        id: panel_text
+        size_hint_y: None
+        height: self.texture_size[1]
+        font_size: dp(14)
+        text_size: Window.width-dp(100), None
+        color: 0,0,0,1
+
+<IndicatorsBox>:
+    id: Ind_box
+    adaptive_height: True
+    size_hint_y: None
+    height: Window.height-dp(570)
+    spacing: 30
+    orientation: 'vertical'
+    padding: 40, 0
+
+    MDBoxLayout:
+        adaptive_height: True
+        spacing: 150
+        MDBoxLayout:
+            padding: 30, 30
+            adaptive_height: True
+            height: dp(150)
+            orientation: 'vertical'
+            canvas.before:
+                Color:
+                    rgba: 200/255, 16/255, 46/255, 1
+                Line:
+                    width: 2
+                    rounded_rectangle: self.x, self.y, self.width, self.height, 10
+
+            Label:
+                text: '84%'
+                font_size: dp(30)
+                bold: True
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'center'
+                text_size: Window.width-dp(100), None
+                color: 0,0,0,1
+
+
+            Label:
+                text: "TAXA\nDE RENDIMENT"
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'center'
+                font_size: dp(11)
+                text_size: Window.width-dp(100), None
+                color: 0,0,0,1
+        MDBoxLayout:
+            padding: 30, 30
+            adaptive_height: True
+            height: dp(150)
+            orientation: 'vertical'
+            canvas.before:
+                Color:
+                    rgba: 200/255, 16/255, 46/255, 1
+                Line:
+                    width: 2
+                    rounded_rectangle: self.x, self.y, self.width, self.height, 10
+
+            Label:
+                text: '12%'
+                font_size: dp(30)
+                bold: True
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'center'
+                text_size: Window.width-dp(100), None
+                color: 0,0,0,1
+
+            Label:
+                text: "TAXA\nD'ABANDONAMENT"
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'center'
+                font_size: dp(11)
+                text_size: Window.width-dp(100), None
+                color: 0,0,0,1
+
+    MDBoxLayout:
+        padding: 30, 30
+        adaptive_height: True
+        orientation: 'vertical'
+        canvas.before:
+            Color:
+                rgba: 200/255, 16/255, 46/255, 1
+            Line:
+                width: 2
+                rounded_rectangle: self.x, self.y, self.width, self.height, 10
+        MDBoxLayout:
+            adaptive_height: True
+            Label:
+                text: '45%'
+                font_size: dp(30)
+                bold: True
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'center'
+                text_size: Window.width-dp(100), None
+                color: 0,0,0,1
+            Label:
+                text: "55%"
+                size_hint_y: None
+                bold: True
+                height: self.texture_size[1]
+                halign: 'center'
+                font_size: dp(30)
+                text_size: Window.width-dp(100), None
+                color: 0,0,0,1
+        MDBoxLayout:
+            adaptive_height: True
+
+            Label:
+                text: 'DONES'
+                font_size: dp(10)
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'center'
+                text_size: Window.width-dp(100), None
+                color: 0,0,0,1
+            Label:
+                text: "HOMES"
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'center'
+                font_size: dp(10)
+                text_size: Window.width-dp(100), None
+                color: 0,0,0,1
+
+<CompareWin@MDBoxLayout>:
+    padding: 0, 30
+    MDBoxLayout:
+        size_hint_x: 0.35
+        orientation: 'vertical'
+        padding: 20, 0, 50, 20
+        spacing: 50
+        MDBoxLayout:
+            MDLabel:
+                text: 'Enginyeria Informàtica'
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'right'
+                font_size: dp(16)
+                bold: True
+        MDBoxLayout:
+            MDLabel:
+                text: 'UPF'
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'right'
+                font_size: dp(15)
+        MDBoxLayout:
+            MDLabel:
+                text: '10.352'
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'right'
+                font_size: dp(15)
+        MDBoxLayout:
+            MDLabel:
+                text: '55'
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'right'
+                font_size: dp(15)
+        MDBoxLayout:
+            MDLabel:
+                text: 'Barcelona'
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'right'
+                font_size: dp(15)
+        MDBoxLayout:
+            MDLabel:
+                text: '75.41%'
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'right'
+                font_size: dp(15)
+        MDBoxLayout:
+            MDLabel:
+                text: '47.13%'
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'right'
+                font_size: dp(15)
+        MDBoxLayout:
+            MDLabel:
+                text: '83,3%'
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'right'
+                font_size: dp(15)
+        MDBoxLayout:
+            MDLabel:
+                text: '16,7%'
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'right'
+                font_size: dp(15)
+        MDBoxLayout:
+            MDLabel:
+                text: '240'
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'right'
+                font_size: dp(15)
+        MDBoxLayout:
+            Widget:
+            MDFlatButton:
+                text: 'LINK'
+                size_hint_y: None
+                #height: self.texture_size[1]
+                halign: 'right'
+                font_size: dp(15)
+                theme_text_color: 'Custom'
+                text_color: 0,0,1,1
+                #pos_hint: {'center_x': 0.9}
+
+
+
+    MDCard:
+        md_bg_color: '#EEEEEE'
+        elevation: 3
+        size_hint_x: 0.35
+        orientation: 'vertical'
+        spacing: 50
+        padding: 0,0,0,20
+        MDBoxLayout:
+            MDLabel:
+                text: 'Grau'
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'center'
+                font_size: dp(16)
+                bold: True
+        MDBoxLayout:
+            MDLabel:
+                text: 'Universitat'
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'center'
+                font_size: dp(16)
+                bold: True
+        MDBoxLayout:
+            MDLabel:
+                text: 'Nota de tall'
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'center'
+                font_size: dp(16)
+                bold: True
+        MDBoxLayout:
+            MDLabel:
+                text: 'Places'
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'center'
+                font_size: dp(16)
+                bold: True
+        MDBoxLayout:
+            MDLabel:
+                text: 'Ciutat'
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'center'
+                font_size: dp(16)
+                bold: True
+        MDBoxLayout:
+            MDLabel:
+                text: "Taxa de rendiment"
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'center'
+                font_size: dp(16)
+                bold: True
+        MDBoxLayout:
+            MDLabel:
+                text: "Taxa d'abandonament"
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'center'
+                font_size: dp(16)
+                bold: True
+        MDBoxLayout:
+            MDLabel:
+                text: 'Homes'
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'center'
+                font_size: dp(16)
+                bold: True
+        MDBoxLayout:
+            MDLabel:
+                text: 'Dones'
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'center'
+                font_size: dp(16)
+                bold: True
+        MDBoxLayout:
+            MDLabel:
+                text: 'Crèdits'
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'center'
+                font_size: dp(16)
+                bold: True
+        MDBoxLayout:
+            MDLabel:
+                text: 'Indicadors\ncomplerts'
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'center'
+                font_size: dp(16)
+                bold: True
+
+    MDBoxLayout:
+        size_hint_x: 0.35
+        orientation: 'vertical'
+        padding: 50, 0, 50, 20
+        spacing: 50
+        MDBoxLayout:
+            MDLabel:
+                id: s_degree_name
+                text: 'Enginyeria Informàtica'
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'left'
+                font_size: dp(16) if len(self.text)<=25 else dp(13)
+                bold: True
+        MDBoxLayout:
+            MDLabel:
+                text: 'URV'
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'left'
+                font_size: dp(15)
+        MDBoxLayout:
+            MDLabel:
+                text: '8.246'
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'left'
+                font_size: dp(15)
+        MDBoxLayout:
+            MDLabel:
+                text: '110'
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'left'
+                font_size: dp(15)
+        MDBoxLayout:
+            MDLabel:
+                text: 'Tarragona'
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'left'
+                font_size: dp(15)
+        MDBoxLayout:
+            MDLabel:
+                text: '68.8%'
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'left'
+                font_size: dp(15)
+        MDBoxLayout:
+            MDLabel:
+                text: '42.9%'
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'left'
+                font_size: dp(15)
+        MDBoxLayout:
+            MDLabel:
+                text: '88.6%'
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'left'
+                font_size: dp(15)
+        MDBoxLayout:
+            MDLabel:
+                text: '11.4'
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'left'
+                font_size: dp(15)
+                MDBoxLayout:
+        MDBoxLayout:
+            MDLabel:
+                text: '240'
+                size_hint_y: None
+                height: self.texture_size[1]
+                halign: 'left'
+                font_size: dp(15)
+        MDBoxLayout:
+            MDFlatButton:
+                text: 'LINK'
+                size_hint_y: None
+                #height: self.texture_size[1]
+                halign: 'left'
+                font_size: dp(15)
+                theme_text_color: 'Custom'
+                text_color: 0,0,1,1
+            Widget:

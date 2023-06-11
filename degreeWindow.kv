@@ -1,0 +1,258 @@
+
+<DegreeWindow>:
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 15
+        MDTopAppBar:
+            title: 'uniplace'
+            md_bg_color: '#EEEEEE'
+            specific_text_color: '#C8102E'
+            anchor_title: "center"
+            left_action_items: [["arrow-left", lambda x: app.change_window('uni')]]
+            right_action_items: [['account-school-outline']]
+            elevation: 0
+
+        MDBottomNavigation:
+            id: bottom_navigation
+            text_color_active: 200/255, 16/255, 46/255, 1
+            text_color_normal: 200/255, 16/255, 46/255, 0.2
+            panel_color: '#EEEEEE'
+            selected_color_background: '#EEEEEE'
+            
+            ### UNIVERSITY GENERAL INFORMATION
+            MDBottomNavigationItem:
+                name: 'info'
+                text: 'Informació'
+                icon: 'information-variant'
+                MDScrollView:
+                    MDBoxLayout:
+                        orientation: 'vertical'
+                        spacing: 20
+                        padding: 50, 10
+                        adaptive_height: True
+                        MDBoxLayout:
+                            adaptive_height: True
+                            padding: 50,20,50,20
+                            spacing: 150
+                            MDLabel:
+                                text: 'ENGINYERIA INFORMÀTICA'
+                                halign: 'center'
+                                font_size: dp(25) if len(self.text) <=35 else dp(20)
+                            Image:
+                                source: 'assets/upf_logo_no_writings.png'
+                                size_hint: None, None
+                                size: dp(58), dp(58)
+                                allow_stretch: True
+                                keep_ratio: True
+
+                        MDSeparator:
+                            color: 200/255, 16/255, 46/255, 1
+
+                        MDBoxLayout:
+                            adaptive_height: True
+                            height: dp(150)
+                            #padding: 30
+                            spacing: 60
+                            MDBoxLayout:
+                                padding: 30, 10
+                                InfoBox:
+                                    anchor_x: 'center'
+                                    anchor_y: 'center'
+                                    MDBoxLayout:
+                                        orientation: 'vertical'
+                                        adaptive_height: True
+                                        spacing: 10
+                                        MDLabel:
+                                            text: '55'
+                                            font_size: dp(70)
+                                            bold: True
+                                            size_hint_y: None
+                                            height: self.texture_size[1]
+                                            halign: 'center'
+
+                                        MDLabel:
+                                            text: "PLACES"
+                                            size_hint_y: None
+                                            height: self.texture_size[1]
+                                            halign: 'center'
+                            MDBoxLayout:
+                                padding: 30, 10
+                                InfoBox:
+                                    anchor_x: 'center'
+                                    anchor_y: 'center'
+                                    MDBoxLayout:
+                                        orientation: 'vertical'
+                                        adaptive_height: True
+                                        spacing: 10
+                                        MDLabel:
+                                            text: '240'
+                                            font_size: dp(70)
+                                            bold: True
+                                            size_hint_y: None
+                                            height: self.texture_size[1]
+                                            halign: 'center'
+
+                                        MDLabel:
+                                            text: "CRÈDITS ETCS"
+                                            size_hint_y: None
+                                            height: self.texture_size[1]
+                                            halign: 'center'
+                        MDLabel:
+                            text: 'Ultimes notes de tall'
+                            theme_text_color: 'Custom'
+                            text_color: 200/255, 16/255, 46/255, 1
+                            halign: 'center'
+                            size_hint_y: None
+                            height: self.texture_size[1]
+                            font_size: dp(13)
+                        MDBoxLayout:
+                            adaptive_height: True
+                            orientation: 'vertical'
+                            padding: 0, 20
+                            spacing: 30
+                            canvas.before:
+                                Color:
+                                    id: infobox
+                                    rgba: 200/255, 16/255, 46/255, 1
+                                Line:
+                                    width: 2
+                                    rounded_rectangle: self.x, self.y, self.width, self.height, 10
+                            MDBoxLayout:
+                                adaptive_height: True
+                                MDLabel:
+                                    text: '2019'
+                                    halign: 'center'
+                                    size_hint_y: None
+                                    height: self.texture_size[1]
+                                    font_size: dp(22)
+                                    bold: True
+                                MDLabel:
+                                    text: '2020'
+                                    halign: 'center'
+                                    size_hint_y: None
+                                    height: self.texture_size[1]
+                                    font_size: dp(22)
+                                    bold: True
+                                MDLabel:
+                                    text: '2021'
+                                    halign: 'center'
+                                    size_hint_y: None
+                                    height: self.texture_size[1]
+                                    font_size: dp(22)
+                                    bold: True
+                            MDBoxLayout:
+                                adaptive_height: True
+                                MDLabel:
+                                    text: '9.064'
+                                    halign: 'center'
+                                    size_hint_y: None
+                                    height: self.texture_size[1]
+                                    font_size: dp(18)
+
+                                MDLabel:
+                                    text: '9.798'
+                                    halign: 'center'
+                                    size_hint_y: None
+                                    height: self.texture_size[1]
+                                    font_size: dp(18)
+                                    #bold: True
+                                MDLabel:
+                                    text: '9.966'
+                                    halign: 'center'
+                                    size_hint_y: None
+                                    height: self.texture_size[1]
+                                    font_size: dp(18)
+                                    #bold: True
+                        MDBoxLayout:
+                            id: panel
+                            orientation: 'vertical'
+                            adaptive_height: True
+                            padding: 10, 0
+
+                        MDBoxLayout:
+                            adaptive_height: True
+                            orientation: 'vertical'
+                            MDFlatButton:
+                                text: '[u]Pàgina web del grau[/u]'
+                                underline: True
+                                theme_text_color: 'Custom'
+                                text_color: 200/255, 16/255, 46/255, 1
+                                size_hint_y: None
+                                font_size: dp(13)
+                                pos_hint: {'center_x': 0.5}
+                                markup: True
+                            MDFlatButton:
+                                text: '[u]Indicadors complerts[/u]'
+                                theme_text_color: 'Custom'
+                                text_color: 200/255, 16/255, 46/255, 1
+                                adaptive_height: True
+                                size_hint_y: None
+                                font_size: dp(13)
+                                pos_hint: {'center_x': 0.5}
+                                markup: True
+                            MDFlatButton:
+                                text: '[u]Ubicació del campus[/u]'
+                                theme_text_color: 'Custom'
+                                text_color: 200/255, 16/255, 46/255, 1
+                                adaptive_height: True
+                                font_size: dp(13)
+                                pos_hint: {'center_x': 0.5}
+                                markup: True
+                            MDRectangleFlatButton:
+                                text: "Compara!"
+                                theme_text_color: "Custom"
+                                text_color: "black"
+                                line_color: 200/255, 16/255, 46/255, 1
+                                #adaptive_height: True
+                                size_hint_y: 0.05
+                                font_size: dp(13)
+                                pos_hint: {'center_x': 0.5}
+                                markup: True
+                                on_release: root.add_grau_to_compare()
+
+
+            ### SUBJECTS
+            MDBottomNavigationItem:
+                name: 'assignatures'
+                text: 'Assignatures'
+                icon: 'bookshelf'
+                BoxLayout:
+                    orientation: 'vertical'
+                    spacing: 30
+                    padding: 30
+
+                    MDLabel:
+                        id: path
+                        theme_text_color: 'Custom'
+                        text_color: '#B0B0B0'
+                        font_size: dp(14)
+                        size_hint_y:  .02
+                        #bold: True
+
+                    MDLabel:
+                        text: 'Assignatures'
+                        theme_text_color: 'Custom'
+                        text_color: '#C8102E'
+                        font_size: 50
+                        bold: True
+                        size_hint_y:  0.05
+
+                    ScrollView:
+                        MDBoxLayout:
+                            id: courses_layout
+                            orientation: 'vertical'
+                            adaptive_height: True
+                            spacing: 40
+                            padding: 5
+                            # size_hint: (1, .93)
+                
+
+            ### COMPARE
+            MDBottomNavigationItem:
+                id: compare_icon
+                name: 'compara'
+                text: 'Compara'
+                icon: 'scale-balance'
+                badge_icon: 'numeric-0'
+                CompareWin:
+                    id: compare_box

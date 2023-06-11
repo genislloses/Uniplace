@@ -1,0 +1,18 @@
+#:include homeWindow.kv
+#:include universityWindow.kv
+#:include degreeWindow.kv
+#:include searchWindow.kv
+#:include utils.kv
+#:import NoTransition kivy.uix.screenmanager.NoTransition
+ScreenManager:
+    id: screen_manager
+    transition: NoTransition()
+    HomeWindow:
+        name: 'home'
+    UniversityWindow:
+        name: 'uni'
+    DegreeWindow:
+        name: 'degree'
+    SearchWindow:
+        name: 'search'
+
