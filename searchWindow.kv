@@ -9,14 +9,13 @@
             specific_text_color: '#C8102E'
             anchor_title: "center"
             pos_hint: {"center": 1}
-            left_action_items: [['arrow-left', lambda x: app.change_window('home')]]
-            right_action_items: [['']]
+            left_action_items: [['arrow-left', lambda x: root.go_back()]]
+            right_action_items: [['account-school-outline']]
             elevation: 0
         MDBoxLayout:
             orientation: 'vertical'
             MDTextField:
                 id: search_field
-                hint_text: 'Enginyeria Informàtica'
                 mode: 'round'
                 pos_hint: {'center_x': 0.5, 'center_y': 0.5}
                 size_hint_x: .95
@@ -25,6 +24,7 @@
                 text_color_focus: 'grey'
                 line_color_focus: 'grey'
                 fill_color_normal: '#EEEEEE'
+                on_text_validate: root.search_grau() if self.text != '' else None
 
             MDBoxLayout:
                 #adaptive_height: True

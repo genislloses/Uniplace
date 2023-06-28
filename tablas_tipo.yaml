@@ -1,0 +1,57 @@
+unis:
+  1:
+    name: Universitat Pompeu Fabra
+    siglas: UPF
+    loc: Barcelona
+    nota_20: 11,129
+    nota_21: 10,432
+    nota_22: 9,789
+    logo_path: 'assets/upf_logo_no_writings.png'
+  2:
+    name: Universitat Politècnica de Catalunya
+    siglas: UPC
+    loc: Barcelona
+    nota_20: 10,167
+    nota_21: 9,682
+    nota_22: 9,087
+    logo_path: 'assets/upc_icon.png'
+  3:
+    name: Universitat de Barcelona
+    siglas: UB
+    loc: Barcelona
+    nota_20: 10,684
+    nota_21: 10,234
+    nota_22: 9,742
+    logo_path: 'assets/ub_logo.png'
+  4:
+    name: Universitat Roviri i Virgili
+    siglas: URV
+    loc: Tarragona
+    nota_20: 8,762
+    nota_21: 8,367
+    nota_22: 7,966
+    logo_path: 'assets/urv_logo.png'
+  5:
+    name: Universitat de Lleida
+    siglas: UDL
+    loc: Lleida
+    nota_20: 8,239
+    nota_21: 7,987
+    nota_22: 7,413
+    logo_path: 'assets/udl_logo.png'
+  6:
+    name: Universitat de Girona
+    siglas: UDG
+    loc: Girona
+    nota_20: 8,864
+    nota_21: 8,675
+    nota_22: 8,582
+    logo_path: 'assets/udg_logo.png'
+  7:
+    name: Universitat Autònoma de Barcelona
+    siglas: UAB
+    loc: Cerdanyola
+    nota_20: 9,764
+    nota_21: 9,312
+    nota_22: 9,088
+    logo_path: 'assets/uab_logo.png'

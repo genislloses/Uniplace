@@ -8,7 +8,7 @@
             md_bg_color: '#EEEEEE'
             specific_text_color: '#C8102E'
             anchor_title: "center"
-            left_action_items: [["arrow-left", lambda x: app.change_window('uni')]]
+            left_action_items: [["arrow-left", lambda x: app.change_window(app.last_screen)]]
             right_action_items: [['account-school-outline']]
             elevation: 0
 
@@ -35,13 +35,14 @@
                             padding: 50,20,50,20
                             spacing: 150
                             MDLabel:
-                                text: 'ENGINYERIA INFORMÀTICA'
+                                id: screen_title
                                 halign: 'center'
                                 font_size: dp(25) if len(self.text) <=35 else dp(20)
                             Image:
-                                source: 'assets/upf_logo_no_writings.png'
+                                id: logo
+                                #source: 'assets/upf_logo_no_writings.png'
                                 size_hint: None, None
-                                size: dp(58), dp(58)
+                                size: (dp(58), dp(58)) if self.source == 'assets/upf_logo_no_writings.png' else (dp(88), dp(88))
                                 allow_stretch: True
                                 keep_ratio: True
 
@@ -199,6 +200,7 @@
                                 pos_hint: {'center_x': 0.5}
                                 markup: True
                             MDRectangleFlatButton:
+                                id: compare_button
                                 text: "Compara!"
                                 theme_text_color: "Custom"
                                 text_color: "black"
@@ -254,5 +256,22 @@
                 text: 'Compara'
                 icon: 'scale-balance'
                 badge_icon: 'numeric-0'
-                CompareWin:
-                    id: compare_box
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    #adaptive_height: True
+                    spacing: 10
+                    padding: 0, 0, 0, 15
+                    CompareWin:
+                        id: compare_box_grau
+                    MDRectangleFlatButton:
+                        id: delete_button
+                        text: "Esborrar Comparació!"
+                        theme_text_color: "Custom"
+                        text_color: "black"
+                        line_color: 200/255, 16/255, 46/255, 1
+                        #adaptive_height: True
+                        size_hint_y: 0.03
+                        font_size: dp(13)
+                        pos_hint: {'center_x': 0.5}
+                        markup: True
+                        on_release: root.delete_comparation()

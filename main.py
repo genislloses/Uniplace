@@ -10,8 +10,15 @@ import mysql.connector
 class MainApp(MDApp):
     
     comparation_degrees = []
+
     uni_ID = None
+    uni_name = None
     grau_ID = None
+    grau_name = None
+
+    last_search = 'bio'
+
+    last_screen = None
 
     def build(self):
         Window.size = (450, 800)

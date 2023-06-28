@@ -11,8 +11,7 @@
             specific_text_color: '#C8102E'
             anchor_title: "center"
             elevation: 0
-
-
+            
         MDTextField:
             id: search_field
             hint_text: 'Buscar'
@@ -56,7 +55,7 @@
                 Button:
                     background_normal: 'assets/uab_campus.jpeg'
                     background_down: 'assets/uab_campus.jpeg'
-                    on_release: app.change_window('degree')
+                    on_release: root.update_selected_uni(7); app.change_window('uni')
                     Image:
                         source: 'assets/uab_logo.png'
                         y: self.parent.y - self.parent.height*0.5 + 70
@@ -66,6 +65,7 @@
                 Button:
                     background_normal: 'assets/ub_campus.jpeg'
                     background_down: 'assets/ub_campus.jpeg' 
+                    on_release: root.update_selected_uni(3); app.change_window('uni')
                     Image:
                         source: 'assets/ub_logo.png'
                         y: self.parent.y - self.parent.height*0.5 + 30
@@ -75,6 +75,7 @@
                 Button:
                     background_normal: 'assets/udl_campus.jpeg'
                     background_down: 'assets/udl_campus.jpeg' 
+                    on_release: root.update_selected_uni(5); app.change_window('uni')
                     Image:
                         source: 'assets/udl_logo.png'
                         y: self.parent.y - self.parent.height*0.5 + 30
@@ -84,6 +85,7 @@
                 Button:
                     background_normal: 'assets/urv_campus.jpeg'
                     background_down: 'assets/urv_campus.jpeg' 
+                    on_release: root.update_selected_uni(4); app.change_window('uni')
                     Image:
                         source: 'assets/urv_logo.png'
                         y: self.parent.y - self.parent.height*0.5 + 30
@@ -93,6 +95,7 @@
                 Button:
                     background_normal: 'assets/udg_campus.jpeg'
                     background_down: 'assets/udg_campus.jpeg' 
+                    on_release: root.update_selected_uni(6); app.change_window('uni')
                     Image:
                         source: 'assets/udg_logo.png'
                         y: self.parent.y - self.parent.height*0.5 + 100

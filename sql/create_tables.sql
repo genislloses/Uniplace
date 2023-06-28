@@ -36,7 +36,6 @@ CREATE TABLE test.uni_grau(
 -- CREATE test.assignatures
 DROP TABLE IF EXISTS test.assignatures;
 CREATE TABLE test.assignatures(
-	assig_ID INT,
     grau_ID INT,
     assig_name VARCHAR (150),
     curs INT,

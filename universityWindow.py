@@ -1,7 +1,7 @@
 
 from kivymd.app import MDApp
 from functools import partial
-from kivy.uix.screenmanager import Screen
+from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.uix.button import Button
 from kivy.uix.screenmanager import NoTransition
 from kivy.graphics import *
@@ -11,6 +11,7 @@ from kivy.animation import Animation
 from kivy.clock import Clock
 import webbrowser
 import aiosql
+import yaml
 
 
 class OpenDropButton(GridLayout,Button,ButtonBehavior):
@@ -52,10 +53,12 @@ class UniversityWindow(Screen):
         self.app = MDApp.get_running_app()
         self.conn = self.app.connect_bbdd()
         self.queries = aiosql.from_path('sql/queries.sql', 'pymysql')
-        self.uni_ID = None
-        self.uni_name = None
-        self.selected_grau_ID = None
         self.color = '#C8102E'
+        with open("tablas_tipo.yaml", 'r') as stream:
+            self.tablas_tipo = yaml.safe_load(stream)
+    
+    def on_leave(self, *args):
+        self.app.last_screen = 'uni'
    
     def on_pre_enter(self, *args):
         self.ids.ambits_layout.clear_widgets()
@@ -63,56 +66,62 @@ class UniversityWindow(Screen):
         self.ids.bottom_navigation.ids.tab_manager.transition = NoTransition()
         self.ambits_buttons = []
         self.sub_ambits_buttons = []
-        home_screen = self.manager.get_screen("home")
-        self.uni_ID = home_screen.get_selected_uni()
         self.ids.compare_icon.badge_icon = 'numeric-' + str(len(self.app.comparation_degrees))
 
-        if self.uni_ID == 1:
-            self.uni_name = 'UPF'
-        elif self.uni_ID == 2:
-            self.uni_name = 'UPC'
+        if self.app.uni_ID == 1:
+            self.app.uni_name = 'UPF'
+        elif self.app.uni_ID == 2:
+            self.app.uni_name = 'UPC'
+        elif self.app.uni_ID == 3:
+            self.app.uni_name = 'UB'
+        elif self.app.uni_ID == 4:
+            self.app.uni_name = 'URV'
 
-        self.add_logo()
         self.get_info()
         self.add_ambits() 
         self.update_color()
+
+        print('UNI ID:  ', self.app.uni_ID)
+        print('UNI NAME:  ', self.app.uni_name)
+        print('GRAU ID:  ', self.app.grau_ID)
+        print('GRAU NAME:  ', self.app.grau_name)
 
     
     def update_color(self):
         self.ids.app_name.specific_text_color = self.color
         self.ids.label1.color = self.color
         self.ids.label2.text_color = self.color
-        self.ids.label3.icon_left_color_focus = self.color
         self.ids.link.color = self.color
 
     def update_selected_grau(self, instance):
-        self.selected_grau_ID = instance.id
-    
-    def get_selected_grau(self):
-        return self.selected_grau_ID 
+        self.app.grau_ID = instance.id
+        self.app.grau_name = instance.text
         
     def get_info(self):
         try:
-            graus = list(self.queries.get_num_graus(self.conn, uni_ID = self.uni_ID))[0][0]
+            self.ids.titol_panell.text = self.tablas_tipo['unis'][self.app.uni_ID]['name']
+            self.ids.label2.text = 'Graus' + ' - ' + self.tablas_tipo['unis'][self.app.uni_ID]['siglas']
+
+            graus = list(self.queries.get_num_graus(self.conn, uni_ID = self.app.uni_ID))[0][0]
             self.ids.graus.text = str(graus)
 
-            masters = list(self.queries.get_masters(self.conn, uni_ID = self.uni_ID))[0][0]
+            masters = list(self.queries.get_masters(self.conn, uni_ID = self.app.uni_ID))[0][0]
             self.ids.masters.text = str(masters)
 
-            estudiants = list(self.queries.get_estudiants(self.conn, uni_ID = self.uni_ID))[0][0]
-            self.ids.estudiants.text = str(estudiants)
+            estudiants = list(self.queries.get_estudiants(self.conn, uni_ID = self.app.uni_ID))[0][0]
+            self.ids.estudiants.text = str(estudiants)[:2] + '.' + str(estudiants)[2:] if len(str(estudiants)) == 5 else str(estudiants)[:1] + '.' + str(estudiants)[1:] 
 
-            rector = list(self.queries.get_rector(self.conn, uni_ID = self.uni_ID))[0][0]
+            rector = list(self.queries.get_rector(self.conn, uni_ID = self.app.uni_ID))[0][0]
             self.ids.rector.text = rector
         except IndexError as e:
             print(e)
 
-        self.ids.nota_2019.text = '11.129'
-        self.ids.nota_2020.text = '10.432'
-        self.ids.nota_2021.text = '9.789'
+        self.ids.nota_2020.text = self.tablas_tipo['unis'][self.app.uni_ID]['nota_20']
+        self.ids.nota_2021.text = self.tablas_tipo['unis'][self.app.uni_ID]['nota_21']
+        self.ids.nota_2022.text = self.tablas_tipo['unis'][self.app.uni_ID]['nota_22']
 
     def get_link(self):
-        web_uni = list(self.queries.get_web_uni(self.conn, uni_ID = self.uni_ID))[0][0]
+        web_uni = list(self.queries.get_web_uni(self.conn, uni_ID = self.app.uni_ID))[0][0]
         
         return web_uni
 
@@ -120,7 +129,7 @@ class UniversityWindow(Screen):
         self.selected_ambit = ambit
 
     def add_ambits(self):
-        ambits = self.queries.get_ambits(self.conn, uni_ID = self.uni_ID)
+        ambits = self.queries.get_ambits(self.conn, uni_ID = self.app.uni_ID)
         for ambit_id, ambit in enumerate(ambits):
             btn = OpenDropButton(text = ambit[0], number = ambit_id, sub_ambits=[])
             btn.bind(size=(btn.setter('text_size')))  
@@ -133,7 +142,7 @@ class UniversityWindow(Screen):
     def dropdown(self,chosen_ambit, instance):
         self.update_selected_ambit(instance.text)
         self.ids.ambits_layout.children.index(chosen_ambit)
-        graus = self.queries.get_graus(self.conn, uni_ID = self.uni_ID, ambit_name = chosen_ambit.text)
+        graus = self.queries.get_graus(self.conn, uni_ID = self.app.uni_ID, ambit_name = chosen_ambit.text)
         if chosen_ambit.status < 0: 
             self.show_sub_ambits_buttons(graus,chosen_ambit)
         else:
@@ -171,9 +180,7 @@ class UniversityWindow(Screen):
                 self.ids.ambits_layout.add_widget(ambit_button)
                 for sub_ambit_button in ambit_button.sub_ambits:
                         self.ids.ambits_layout.add_widget(sub_ambit_button)
-                    
-    def add_logo(self):
-        self.ids.uni_logo.source = f'assets/{self.uni_name}_logo.png'
+                
 
     def hyperlink(self, link): 
         webbrowser.open(link)

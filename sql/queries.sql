@@ -30,13 +30,6 @@ SELECT assig_name
 FROM test.assignatures
 WHERE grau_ID = :grau_ID AND curs = :curs
 
--- name: get_uni_grau_names
-SELECT test.unis.uni_name, test.graus.grau_name
-FROM test.graus
-INNER JOIN test.uni_grau ON test.graus.grau_ID = test.uni_grau.grau_ID
-INNER JOIN test.unis ON test.uni_grau.uni_ID = test.unis.uni_ID
-WHERE test.graus.grau_ID = :grau_ID AND test.unis.uni_ID = :uni_ID
-
 -- name: get_web_grau
 select web_grau
 from test.graus
@@ -51,3 +44,10 @@ where grau_ID = :grau_ID
 select web_ind
 from test.graus
 where grau_ID = :grau_ID
+
+-- name: search_graus
+select test.graus.grau_name, test.unis.uni_ID, test.graus.grau_ID
+from test.graus
+inner join test.uni_grau on test.graus.grau_ID = test.uni_grau.grau_ID
+inner join test.unis on test.uni_grau.uni_ID = test.unis.uni_ID
+where test.graus.grau_name like :grau_name

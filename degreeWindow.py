@@ -14,8 +14,10 @@ from kivymd.uix.expansionpanel import MDExpansionPanel, MDExpansionPanelOneLine
 from kivy.clock import Clock
 import webbrowser
 import aiosql
+import random
 from kivymd.uix.gridlayout import MDGridLayout
 from kivymd.uix.label import MDLabel
+import yaml
 
 panel_detail = ["""El món de la comunicació digital es basa en la informática, en les xarxes de telecomunicacions i en
 altres matèries bâsiques (les matemâtiques, la física, etc.), i especialment en els seus aspectes innovadors, com els relacionats amb les aplicacions més avançades d'Internet. Aquesta és la base dels estudis: una manera moderna i innovadora d'utilitzar les eines bâsiques, aplicada als multimèdia.
@@ -99,13 +101,24 @@ class DegreeWindow(Screen):
         self.selected_course = None
         self.app = MDApp.get_running_app()
         self.conn = self.app.connect_bbdd()
-        self.grau_ID = None
-        self.uni_ID = None
-        self.uni_name = None
         self.queries = aiosql.from_path('sql/queries.sql', 'pymysql')
+        with open("tablas_tipo.yaml", 'r') as stream:
+            self.tablas_tipo = yaml.safe_load(stream)
+
+    def on_leave(self, *args):
+        self.app.last_screen = 'degree'
 
 
     def on_pre_enter(self, *args):
+        print('UNI ID:  ', self.app.uni_ID)
+        print('UNI NAME:  ', self.app.uni_name)
+        print('GRAU ID:  ', self.app.grau_ID)
+        print('GRAU NAME:  ', self.app.grau_name)
+
+        print(self.app.comparation_degrees)
+
+        self.ids.logo.source = self.tablas_tipo['unis'][self.app.uni_ID]['logo_path']
+
         panel = self.ids.panel
         panel.clear_widgets()
         panels_list = ['Descripció del grau', 'Sortides laborals', 'Ponderacions']
@@ -124,25 +137,20 @@ class DegreeWindow(Screen):
         self.courses_buttons = []
         self.subjects_buttons = []
         self.add_cursos()
-        uni_screen = self.manager.get_screen("uni")
-        self.grau_ID = uni_screen.get_selected_grau()
-        home_screen = self.manager.get_screen("home")
-        self.uni_ID = home_screen.get_selected_uni()
         self.ids.compare_icon.badge_icon = 'numeric-' + str(len(self.app.comparation_degrees))
+        self.ids.path.text = f'{self.app.uni_name} > {self.app.grau_name}'
+        self.ids.screen_title.text = self.app.grau_name
 
-        if self.uni_ID == 1:
-            self.uni_name = 'upf'
-        elif self.uni_ID == 2:
-            self.uni_name = 'upc'
+        self.uni_screen = self.manager.get_screen("uni")
+        
 
-        uni_grau = self.queries.get_uni_grau_names(self.conn, grau_ID=self.grau_ID, uni_ID=self.uni_ID)
-        uni_grau = list(uni_grau)
-        print(list(uni_grau))
-        if len(uni_grau) > 0:
-            self.ids.path.text = f'{uni_grau[0][0]} > {uni_grau[0][1]}'
+        if len(self.app.comparation_degrees) == 2 or self.app.grau_ID in self.app.comparation_degrees:
+            self.ids.compare_button.disabled = True
+        else:
+            self.ids.compare_button.disabled = False
 
-        # accessing Compare Screen 2nd degree name label text
-        print(self.ids.compare_box.ids.s_degree_name.text)
+        # accessing Compare Screen 2nd degree name label text"""
+        #print(self.ids.compare_box.ids.s_degree_name.text)
 
     def update_selected_course(self, course):
         self.selected_course = course
@@ -161,7 +169,7 @@ class DegreeWindow(Screen):
     def dropdown(self, chosen_curs, instance):
         self.update_selected_course(instance.text)
         self.ids.courses_layout.children.index(chosen_curs)
-        assignatures = self.queries.get_assignatures(self.conn, grau_ID=self.grau_ID, curs=chosen_curs.number + 1)
+        assignatures = self.queries.get_assignatures(self.conn, grau_ID=self.app.grau_ID, curs=chosen_curs.number + 1)
         assignatures = [i[0] for i in assignatures]
         if chosen_curs.status < 0:
             self.show_subjects_buttons(assignatures, chosen_curs)
@@ -200,8 +208,140 @@ class DegreeWindow(Screen):
                     self.ids.courses_layout.add_widget(subjects_button)
 
     def add_grau_to_compare(self):
-        self.app.comparation_degrees.append(self.grau_ID)
+        self.app.comparation_degrees.append(self.app.grau_ID)
         self.ids.compare_icon.badge_icon = 'numeric-' + str(int(self.ids.compare_icon.badge_icon.split('-')[1]) + 1)
+        self.ids.compare_button.disabled = True
+        if len(self.app.comparation_degrees) == 1:
+            grau_name = self.app.grau_name
+            uni_name = self.tablas_tipo['unis'][self.app.uni_ID]['siglas']
+            nota = round(random.uniform(6, 12.500), 3)
+            places = random.randint(6, 20) * 5
+            loc = self.tablas_tipo['unis'][self.app.uni_ID]['loc']
+            rendiment = round(random.uniform(60, 90), 2)
+            abandonament = round(random.uniform(25, 55), 2)
+            homes = round(random.uniform(35, 65), 2)
+            dones = round(100 - homes, 2)
+            credits = '240'
+            link = 'LINK'
+
+            #GRAU
+            self.ids.compare_box_grau.ids.comp1_grau_name.text = grau_name
+            self.ids.compare_box_grau.ids.comp1_uni_name.text = uni_name
+            self.ids.compare_box_grau.ids.comp1_nota.text = str(nota)
+            self.ids.compare_box_grau.ids.comp1_places.text = str(places)
+            self.ids.compare_box_grau.ids.comp1_loc.text = loc
+            self.ids.compare_box_grau.ids.comp1_rendiment.text = str(rendiment) + '%'
+            self.ids.compare_box_grau.ids.comp1_abandonament.text = str(abandonament) + '%'
+            self.ids.compare_box_grau.ids.comp1_homes.text = str(homes)
+            self.ids.compare_box_grau.ids.comp1_dones.text = str(dones)
+            self.ids.compare_box_grau.ids.comp1_credits.text = credits
+            self.ids.compare_box_grau.ids.comp1_link.text = link
+            #UNI
+            self.uni_screen.ids.compare_box_uni.ids.comp1_grau_name.text = grau_name
+            self.uni_screen.ids.compare_box_uni.ids.comp1_uni_name.text = uni_name
+            self.uni_screen.ids.compare_box_uni.ids.comp1_nota.text = str(nota)
+            self.uni_screen.ids.compare_box_uni.ids.comp1_places.text = str(places)
+            self.uni_screen.ids.compare_box_uni.ids.comp1_loc.text = loc
+            self.uni_screen.ids.compare_box_uni.ids.comp1_rendiment.text = str(rendiment) + '%'
+            self.uni_screen.ids.compare_box_uni.ids.comp1_abandonament.text = str(abandonament) + '%'
+            self.uni_screen.ids.compare_box_uni.ids.comp1_homes.text = str(homes)
+            self.uni_screen.ids.compare_box_uni.ids.comp1_dones.text = str(dones)
+            self.uni_screen.ids.compare_box_uni.ids.comp1_credits.text = credits
+            self.uni_screen.ids.compare_box_uni.ids.comp1_link.text = link
+
+        else:
+            grau_name = self.app.grau_name
+            uni_name = self.tablas_tipo['unis'][self.app.uni_ID]['siglas']
+            nota = round(random.uniform(6, 12.500), 3)
+            places = random.randint(6, 20) * 5
+            loc = self.tablas_tipo['unis'][self.app.uni_ID]['loc']
+            rendiment = round(random.uniform(60, 90), 2)
+            abandonament = round(random.uniform(25, 55), 2)
+            homes = round(random.uniform(35, 65), 2)
+            dones = round(100 - homes, 2)
+            credits = '240'
+            link = 'LINK'
+
+            #GRAU
+            self.ids.compare_box_grau.ids.comp2_grau_name.text = grau_name
+            self.ids.compare_box_grau.ids.comp2_uni_name.text = uni_name
+            self.ids.compare_box_grau.ids.comp2_nota.text = str(nota)
+            self.ids.compare_box_grau.ids.comp2_places.text = str(places)
+            self.ids.compare_box_grau.ids.comp2_loc.text = loc
+            self.ids.compare_box_grau.ids.comp2_rendiment.text = str(rendiment) + '%'
+            self.ids.compare_box_grau.ids.comp2_abandonament.text = str(abandonament) + '%'
+            self.ids.compare_box_grau.ids.comp2_homes.text = str(homes)
+            self.ids.compare_box_grau.ids.comp2_dones.text = str(dones)
+            self.ids.compare_box_grau.ids.comp2_credits.text = credits
+            self.ids.compare_box_grau.ids.comp2_link.text = link
+
+            #UNI
+            self.uni_screen.ids.compare_box_uni.ids.comp2_grau_name.text = grau_name
+            self.uni_screen.ids.compare_box_uni.ids.comp2_uni_name.text = uni_name
+            self.uni_screen.ids.compare_box_uni.ids.comp2_nota.text = str(nota)
+            self.uni_screen.ids.compare_box_uni.ids.comp2_places.text = str(places)
+            self.uni_screen.ids.compare_box_uni.ids.comp2_loc.text = loc
+            self.uni_screen.ids.compare_box_uni.ids.comp2_rendiment.text = str(rendiment) + '%'
+            self.uni_screen.ids.compare_box_uni.ids.comp2_abandonament.text = str(abandonament) + '%'
+            self.uni_screen.ids.compare_box_uni.ids.comp2_homes.text = str(homes)
+            self.uni_screen.ids.compare_box_uni.ids.comp2_dones.text = str(dones)
+            self.uni_screen.ids.compare_box_uni.ids.comp2_credits.text = credits
+            self.uni_screen.ids.compare_box_uni.ids.comp2_link.text = link
+      
+            
+    def delete_comparation(self):
+        self.app.comparation_degrees = []
+        self.ids.compare_button.disabled = False
+        
+        #GRAU
+        self.ids.compare_box_grau.ids.comp1_grau_name.text = ''
+        self.ids.compare_box_grau.ids.comp1_uni_name.text = ''
+        self.ids.compare_box_grau.ids.comp1_nota.text = ''
+        self.ids.compare_box_grau.ids.comp1_places.text = ''
+        self.ids.compare_box_grau.ids.comp1_loc.text = ''
+        self.ids.compare_box_grau.ids.comp1_rendiment.text = ''
+        self.ids.compare_box_grau.ids.comp1_abandonament.text = ''
+        self.ids.compare_box_grau.ids.comp1_homes.text = ''
+        self.ids.compare_box_grau.ids.comp1_dones.text = ''
+        self.ids.compare_box_grau.ids.comp1_credits.text = ''
+        self.ids.compare_box_grau.ids.comp1_link.text = ''
+
+        self.ids.compare_box_grau.ids.comp2_grau_name.text = ''
+        self.ids.compare_box_grau.ids.comp2_uni_name.text = ''
+        self.ids.compare_box_grau.ids.comp2_nota.text = ''
+        self.ids.compare_box_grau.ids.comp2_places.text = ''
+        self.ids.compare_box_grau.ids.comp2_loc.text = ''
+        self.ids.compare_box_grau.ids.comp2_rendiment.text = ''
+        self.ids.compare_box_grau.ids.comp2_abandonament.text = ''
+        self.ids.compare_box_grau.ids.comp2_homes.text = ''
+        self.ids.compare_box_grau.ids.comp2_dones.text = ''
+        self.ids.compare_box_grau.ids.comp2_credits.text = ''
+        self.ids.compare_box_grau.ids.comp2_link.text = ''
+
+        #UNI
+        self.uni_screen.ids.compare_box_uni.ids.comp1_grau_name.text = ''
+        self.uni_screen.ids.compare_box_uni.ids.comp1_uni_name.text = ''
+        self.uni_screen.ids.compare_box_uni.ids.comp1_nota.text = ''
+        self.uni_screen.ids.compare_box_uni.ids.comp1_places.text = ''
+        self.uni_screen.ids.compare_box_uni.ids.comp1_loc.text = ''
+        self.uni_screen.ids.compare_box_uni.ids.comp1_rendiment.text = ''
+        self.uni_screen.ids.compare_box_uni.ids.comp1_abandonament.text = ''
+        self.uni_screen.ids.compare_box_uni.ids.comp1_homes.text = ''
+        self.uni_screen.ids.compare_box_uni.ids.comp1_dones.text = ''
+        self.uni_screen.ids.compare_box_uni.ids.comp1_credits.text = ''
+        self.uni_screen.ids.compare_box_uni.ids.comp1_link.text = ''
+
+        self.uni_screen.ids.compare_box_uni.ids.comp2_grau_name.text = ''
+        self.uni_screen.ids.compare_box_uni.ids.comp2_uni_name.text = ''
+        self.uni_screen.ids.compare_box_uni.ids.comp2_nota.text = ''
+        self.uni_screen.ids.compare_box_uni.ids.comp2_places.text = ''
+        self.uni_screen.ids.compare_box_uni.ids.comp2_loc.text = ''
+        self.uni_screen.ids.compare_box_uni.ids.comp2_rendiment.text = ''
+        self.uni_screen.ids.compare_box_uni.ids.comp2_abandonament.text = ''
+        self.uni_screen.ids.compare_box_uni.ids.comp2_homes.text = ''
+        self.uni_screen.ids.compare_box_uni.ids.comp2_dones.text = ''
+        self.uni_screen.ids.compare_box_uni.ids.comp2_credits.text = ''
+        self.uni_screen.ids.compare_box_uni.ids.comp2_link.text = ''
 
     def hyperlink(self, link):
         webbrowser.open(link)
