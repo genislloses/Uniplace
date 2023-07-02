@@ -23,8 +23,6 @@ class SearchWindow(Screen):
         view_area = self.ids.search_area
         view_area.clear_widgets()
 
-        nota = random.uniform(6, 12)
-
         home_screen = self.manager.get_screen('home')
         grau_name = home_screen.ids.search_field.text
 
@@ -33,9 +31,17 @@ class SearchWindow(Screen):
         print(results)
         for result in results:
             varianza = random.uniform(-1, 1)
+            if result[2] == 1:
+                nota = '10,352'
+            elif result[2] == 77:
+                nota = '10,818'
+            else:
+                nota = random.uniform(9, 10)
+                nota = str(round(nota + varianza, 3))
+            
             uni_name = self.tablas_tipo['unis'][result[1]]['name']
             logo = self.tablas_tipo['unis'][result[1]]['logo_path']
-            item = SearchItemCard(logo=logo, grau_name= result[0], grau_ID=result[2], uni_name=uni_name, uni_ID=result[1], nota= str(round(nota + varianza, 3)), loc= self.tablas_tipo['unis'][result[1]]['loc'])
+            item = SearchItemCard(logo=logo, grau_name= result[0], grau_ID=result[2], uni_name=uni_name, uni_ID=result[1], nota= nota, loc= self.tablas_tipo['unis'][result[1]]['loc'])
             view_area.add_widget(item)
 
     def search_grau(self):
@@ -45,13 +51,17 @@ class SearchWindow(Screen):
         nota = random.uniform(6, 12)
 
         grau_name = self.ids.search_field.text
+        if grau_name == 'medicina':
+            nota = 12.678
+        if grau_name == 'periodisme':
+            nota = 10.012
         home_screen = self.manager.get_screen('home')
         home_screen.ids.search_field.text = grau_name
 
         results = list(self.queries.search_graus(self.conn, grau_name = '%' + grau_name + '%'))
         print(results)
         for result in results:
-            varianza = random.uniform(-1, 1)
+            varianza = random.uniform(-0.7, 0.7)
             uni_name = self.tablas_tipo['unis'][result[1]]['name']
             logo = self.tablas_tipo['unis'][result[1]]['logo_path']
             item = SearchItemCard(logo=logo, grau_name= result[0], grau_ID= result[2], uni_name=uni_name, uni_ID=result[1], nota= str(round(nota + varianza, 3)), loc= self.tablas_tipo['unis'][result[1]]['loc'])

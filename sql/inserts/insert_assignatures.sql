@@ -129,8 +129,8 @@ INSERT INTO test.assignatures VALUES
 	(4, "Organització Constitucional de l'Estat i Fonts del Dret", 1),
 	(4, 'Història del Dret', 1),
 	(4, 'Ciència Política', 1),
-	(4, "Economia i Instruments Analítics per al'Estudi del Dret i Fonaments del Dret Privat i de l'Empresa", 1),
-	(4, 'Drets i Llibertats Fonamentals/ FundamentalRights and Freedoms', 1),
+	(4, "Economia i Instruments Analítics per al'Estudi del Dret", 1),
+	(4, 'Drets i Llibertats Fonamentals', 1),
 	(4, 'Dret Internacional Públic', 2),
 	(4, 'Contractes', 2),
 	(4, 'Dret Penal: Part General', 2),
@@ -143,7 +143,7 @@ INSERT INTO test.assignatures VALUES
 	(4, 'Dret Mercantil: Dret de Societats', 3),
 	(4, 'Dret de Danys / Law of Damages', 3),
 	(4, 'Urbanisme i Dret del Territori', 3),
-	(4, 'Dret Mercantil: Dret de la Competència i Propietat Intel·lectual i Industrial / BusinessLaw. Antitrust and Industrial and IntellectualProperty Law', 3),
+	(4, 'Dret Mercantil: Competència i Propietat Intel·lectual', 3),
 	(4, 'Dret Col·lectiu del Treball', 3),
 	(4, 'Dret Tributari', 3),
 	(4, 'Dret Individual del Treball i Protecció Social', 3),
@@ -156,7 +156,7 @@ INSERT INTO test.assignatures VALUES
 	(4, 'Dret Processal Penal', 4),
 	(4, 'Dret Mercantil: Dret Concursal', 4),
 	(4, 'Filosofia del Dret / Philosophy of Law', 4),
-	(4, 'Resolució Alternativa de Conflictes /Alternative Dispute Resolution', 4),
+	(4, 'Resolució Alternativa de Conflictes', 4),
 	(4, 'TFG', 4);
     
 -- RELACIONS LABORALS UPF

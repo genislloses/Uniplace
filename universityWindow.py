@@ -81,6 +81,8 @@ class UniversityWindow(Screen):
         self.add_ambits() 
         self.update_color()
 
+        self.grau_screen = self.manager.get_screen("degree")
+
         print('UNI ID:  ', self.app.uni_ID)
         print('UNI NAME:  ', self.app.uni_name)
         print('GRAU ID:  ', self.app.grau_ID)
@@ -184,4 +186,60 @@ class UniversityWindow(Screen):
 
     def hyperlink(self, link): 
         webbrowser.open(link)
+
+    def delete_comparation(self):
+        self.app.comparation_degrees = []
+        self.grau_screen.ids.compare_button.disabled = False
+        self.grau_screen.ids.compare_icon.badge_icon = 'numeric-0'
+        self.ids.compare_icon.badge_icon = 'numeric-0'
+        
+        #GRAU
+        self.grau_screen.ids.compare_box_grau.ids.comp1_grau_name.text = ''
+        self.grau_screen.ids.compare_box_grau.ids.comp1_uni_name.text = ''
+        self.grau_screen.ids.compare_box_grau.ids.comp1_nota.text = ''
+        self.grau_screen.ids.compare_box_grau.ids.comp1_places.text = ''
+        self.grau_screen.ids.compare_box_grau.ids.comp1_loc.text = ''
+        self.grau_screen.ids.compare_box_grau.ids.comp1_rendiment.text = ''
+        self.grau_screen.ids.compare_box_grau.ids.comp1_abandonament.text = ''
+        self.grau_screen.ids.compare_box_grau.ids.comp1_homes.text = ''
+        self.grau_screen.ids.compare_box_grau.ids.comp1_dones.text = ''
+        self.grau_screen.ids.compare_box_grau.ids.comp1_credits.text = ''
+        self.grau_screen.ids.compare_box_grau.ids.comp1_link.text = ''
+
+        self.grau_screen.ids.compare_box_grau.ids.comp2_grau_name.text = ''
+        self.grau_screen.ids.compare_box_grau.ids.comp2_uni_name.text = ''
+        self.grau_screen.ids.compare_box_grau.ids.comp2_nota.text = ''
+        self.grau_screen.ids.compare_box_grau.ids.comp2_places.text = ''
+        self.grau_screen.ids.compare_box_grau.ids.comp2_loc.text = ''
+        self.grau_screen.ids.compare_box_grau.ids.comp2_rendiment.text = ''
+        self.grau_screen.ids.compare_box_grau.ids.comp2_abandonament.text = ''
+        self.grau_screen.ids.compare_box_grau.ids.comp2_homes.text = ''
+        self.grau_screen.ids.compare_box_grau.ids.comp2_dones.text = ''
+        self.grau_screen.ids.compare_box_grau.ids.comp2_credits.text = ''
+        self.grau_screen.ids.compare_box_grau.ids.comp2_link.text = ''
+
+        #UNI
+        self.ids.compare_box_uni.ids.comp1_grau_name.text = ''
+        self.ids.compare_box_uni.ids.comp1_uni_name.text = ''
+        self.ids.compare_box_uni.ids.comp1_nota.text = ''
+        self.ids.compare_box_uni.ids.comp1_places.text = ''
+        self.ids.compare_box_uni.ids.comp1_loc.text = ''
+        self.ids.compare_box_uni.ids.comp1_rendiment.text = ''
+        self.ids.compare_box_uni.ids.comp1_abandonament.text = ''
+        self.ids.compare_box_uni.ids.comp1_homes.text = ''
+        self.ids.compare_box_uni.ids.comp1_dones.text = ''
+        self.ids.compare_box_uni.ids.comp1_credits.text = ''
+        self.ids.compare_box_uni.ids.comp1_link.text = ''
+
+        self.ids.compare_box_uni.ids.comp2_grau_name.text = ''
+        self.ids.compare_box_uni.ids.comp2_uni_name.text = ''
+        self.ids.compare_box_uni.ids.comp2_nota.text = ''
+        self.ids.compare_box_uni.ids.comp2_places.text = ''
+        self.ids.compare_box_uni.ids.comp2_loc.text = ''
+        self.ids.compare_box_uni.ids.comp2_rendiment.text = ''
+        self.ids.compare_box_uni.ids.comp2_abandonament.text = ''
+        self.ids.compare_box_uni.ids.comp2_homes.text = ''
+        self.ids.compare_box_uni.ids.comp2_dones.text = ''
+        self.ids.compare_box_uni.ids.comp2_credits.text = ''
+        self.ids.compare_box_uni.ids.comp2_link.text = ''
 

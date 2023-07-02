@@ -138,6 +138,10 @@
     spacing: 30
     orientation: 'vertical'
     padding: 40, 0
+    rendiment: ''
+    abandonament: ''
+    homes: ''
+    dones: ''
 
     MDBoxLayout:
         adaptive_height: True
@@ -155,7 +159,7 @@
                     rounded_rectangle: self.x, self.y, self.width, self.height, 10
 
             Label:
-                text: '84%'
+                text: root.rendiment
                 font_size: dp(30)
                 bold: True
                 size_hint_y: None
@@ -186,7 +190,7 @@
                     rounded_rectangle: self.x, self.y, self.width, self.height, 10
 
             Label:
-                text: '12%'
+                text: root.abandonament
                 font_size: dp(30)
                 bold: True
                 size_hint_y: None
@@ -217,7 +221,7 @@
         MDBoxLayout:
             adaptive_height: True
             Label:
-                text: '45%'
+                text: root.dones
                 font_size: dp(30)
                 bold: True
                 size_hint_y: None
@@ -226,7 +230,7 @@
                 text_size: Window.width-dp(100), None
                 color: 0,0,0,1
             Label:
-                text: "55%"
+                text: root.homes
                 size_hint_y: None
                 bold: True
                 height: self.texture_size[1]
@@ -337,12 +341,10 @@
             MDFlatButton:
                 id: comp1_link
                 size_hint_y: None
-                #height: self.texture_size[1]
                 halign: 'right'
                 font_size: dp(15)
                 theme_text_color: 'Custom'
                 text_color: 0,0,1,1
-                #pos_hint: {'center_x': 0.9}
 
 
 

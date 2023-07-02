@@ -21,7 +21,7 @@ class MainApp(MDApp):
     last_screen = None
 
     def build(self):
-        Window.size = (450, 800)
+        Window.size = (460, 800)
         # self.theme_cpip install mysql-connector-pythonls.primary_palette = 'Red'
         self.theme_cls.material_style = "M3"
         #kv = Builder.load_file('main.kv')

@@ -55,3 +55,30 @@ unis:
     nota_21: 9,312
     nota_22: 9,088
     logo_path: 'assets/uab_logo.png'
+
+
+graus:
+  A:
+    Descripció: |
+      El món de la comunicació digital es basa en la informàtica, en les xarxes de telecomunicacions i en altres matèries bàsiques (les matemàtiques, la física, etc.), i especialment en els seus aspectes innovadors, com els relacionats amb les aplicacions més avançades d'Internet. Aquesta és la base dels estudis: una manera moderna i innovadora d'utilitzar les eines bàsiques, aplicada als multimèdia.
+      El grau en Enginyeria en Informàtica proporciona, d'una banda, una formació fonamental i sòlida en informàtica que capacita per a l'exercici de la professió i, d'una altra banda, té una orientació cap a la comunicació digital, que possibilita cursar itineraris optatius centrats en sistemes audiovisuals, comunicacions i continguts multimèdia, sistemes intel·ligents, i xarxes i serveis telemàtics.
+      El que es proposa és, doncs, una formació sòlida, amb innovacions, i una formació aplicada als nous continguts multimèdia, l'audiovisual digital i els serveis telemàtics.
+
+    Sortides laborals: |
+      • Dissenyar, desenvolupar, seleccionar i avaluar aplicacions i sistemes informàtics.
+      • Conèixer, comprendre i saber avaluar l'estructura i l'arquitectura dels ordinadors, així com els components bàsics que els formen.
+      • Conèixer les característiques, les funcionalitats i l'estructura dels sistemes operatius i saber dissenyar i implementar aplicacions basades en els seus serveis.
+      • Conèixer els fonaments teòrics dels llenguatges de programació i les tècniques de processament lèxic, sintàctic i semàntic associades, i saber aplicar-les a la creació, el disseny i el processament de llenguatges.
+      • Avaluar la complexitat computacional d'un problema i conèixer estratègies algorísmiques que puguin conduir a la seva resolució per recomanar, desenvolupar i implementar la que garanteixi el millor rendiment d'acord amb els requisits establerts.
+      • Desenvolupar i avaluar sistemes interactius, presentar informació complexa i aplicar-la a la resolució de problemes de disseny d'interacció entre persona i ordinador.
+
+    Ponderacions: |
+      • 0.2
+        • Matemàtiques
+        • Matemàtiques (ciències socials )
+        • Física
+        • Química
+
+      • 0.1
+        • Biologia
+        • Filosofia
